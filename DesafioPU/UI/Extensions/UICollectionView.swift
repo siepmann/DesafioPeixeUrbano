@@ -1,0 +1,22 @@
+//
+//  UICollectionView.swift
+//  teste
+//
+//  Created by Guilherme Siepmann on 07/11/19.
+//  Copyright © 2019 Guilherme Siepmann. All rights reserved.
+//
+
+import UIKit
+
+extension UICollectionView {
+    func registerCollectionViewCell<T: ReusableCellIdentifiable>(_ cell: T.Type) {
+        register(
+            UINib(
+                nibName: String(describing: cell),
+                bundle: nil
+            ),
+            forCellWithReuseIdentifier: T.reusableIdentifier
+        )
+    }
+}
+
