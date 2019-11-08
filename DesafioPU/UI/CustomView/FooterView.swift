@@ -9,8 +9,6 @@
 import UIKit
 
 class FooterView: UIView {
-    private var priceLabelWidth: CGFloat = 0
-    
     private var title: String
     private var price: Double
     
@@ -54,18 +52,17 @@ class FooterView: UIView {
         let attributedString = NSMutableAttributedString(string: "A partir de ",
                                                          attributes: [
                                                             NSAttributedString.Key.foregroundColor : UIColor.gray,
-                                                            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13)])
+                                                            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)])
         let attributedCurrency = NSMutableAttributedString(string: "R$ ",
                                                            attributes: [
                                                             NSAttributedString.Key.foregroundColor : UIColor.orange,
-                                                            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13)])
+                                                            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)])
         
         let attributedPrice = NSMutableAttributedString(string: String(format: "%.2f", self.price),
                                                         attributes: [
                                                             NSAttributedString.Key.foregroundColor : UIColor.orange,
-                                                            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)])
+                                                            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
         
-        priceLabelWidth = attributedString.size().width
         attributedString.append(attributedCurrency)
         attributedString.append(attributedPrice)
         
@@ -86,8 +83,8 @@ class FooterView: UIView {
             
             priceLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
             priceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
-            priceLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
-            priceLabel.widthAnchor.constraint(equalToConstant: priceLabelWidth)
+            priceLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8),
+            priceLabel.widthAnchor.constraint(equalToConstant: 80)
             ])
     }
 }

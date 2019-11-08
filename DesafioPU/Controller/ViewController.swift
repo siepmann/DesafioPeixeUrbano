@@ -13,6 +13,7 @@ enum ViewControllerType {
 }
 
 class ViewController: UIViewController {
+    
     enum Sections {
         case banner, deals
     }
@@ -130,7 +131,7 @@ extension ViewController: UITableViewDelegate {
         case .banner:
             return 100
         case .deals:
-            return 250
+            return 200
         }
     }
 }
