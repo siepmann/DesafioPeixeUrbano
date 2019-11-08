@@ -19,16 +19,18 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         createNavigationBarButtons()
         
         let cityDealsViewController = ViewController(with: .city)
-        let cityDealsBarItem = UITabBarItem(title: "teste 1", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
+        let cityDealsBarItem = UITabBarItem(title: "Na cidade", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
         cityDealsViewController.tabBarItem = cityDealsBarItem
         
         let tripDealsViewController = ViewController(with: .trip)
-        let tripDealsBarItem = UITabBarItem(title: "teste 2", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
+        let tripDealsBarItem = UITabBarItem(title: "Viagens", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
         tripDealsViewController.tabBarItem = tripDealsBarItem
 
         let productDealsViewController = ViewController(with: .product)
-        let productDealsBarItem = UITabBarItem(title: "teste 3", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
+        let productDealsBarItem = UITabBarItem(title: "Produtos", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
         productDealsViewController.tabBarItem = productDealsBarItem
+        
+        self.tabBar.tintColor = UIColor.orange
         
         self.viewControllers = [cityDealsViewController, tripDealsViewController, productDealsViewController]
     }

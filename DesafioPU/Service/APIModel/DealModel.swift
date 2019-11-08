@@ -68,6 +68,7 @@ struct Deal: Codable {
     let minSalePrice: Double
     let dealImage: String?
     let dealOriginalImage: String?
+    let partner: Partner?
     
     enum CodingKeys: String, CodingKey {
         case dealID = "deal_id"
@@ -78,6 +79,7 @@ struct Deal: Codable {
         case salePrice = "sale_price"
         case minSalePrice = "min_sale_price"
         case dealImage, dealOriginalImage
+        case partner
     }
 }
 
@@ -85,4 +87,12 @@ struct Deal: Codable {
 struct Image: Codable {
     let image, thumb: String?
     let original: String?
+}
+
+struct Partner: Codable {
+    let name: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+    }
 }

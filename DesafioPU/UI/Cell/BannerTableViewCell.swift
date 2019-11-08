@@ -26,7 +26,7 @@ class BannerTableViewCell: UITableViewCell {
         collectionView.allowsSelection = false
         collectionView.dataSource = self
         
-        collectionView.registerCollectionViewCell(BannerCollectionViewCell.self)
+//        collectionView.registerCollectionViewCell(BannerCollectionViewCell.self)
     }
     
     required init?(coder aDecoder: NSCoder) {

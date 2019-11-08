@@ -1,5 +1,5 @@
 //
-//  FooterView.swift
+//  DealFooterView.swift
 //  teste
 //
 //  Created by Guilherme Siepmann on 07/11/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FooterView: UIView {
+class DealFooterView: UIView {
     private var title: String
     private var price: Double
     
@@ -16,7 +16,7 @@ class FooterView: UIView {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 2
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

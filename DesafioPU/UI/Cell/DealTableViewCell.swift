@@ -9,25 +9,39 @@
 import UIKit
 
 class DealTableViewCell: UITableViewCell {
-    private var footerView: FooterView!
+    private var footerView: DealFooterView!
     
-    private let dealImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 300))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private let imageViewFooterView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
+    private let view: UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let dealTitleLable: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    private let dealImageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let partnerNameLabel: UILabel = {
+        let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 2
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .white
         return label
+    }()
+    
+    private let favoriteButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: ""), for: .normal)
+        button.setTitle("", for: .normal)
+        //        button.addTarget(self, action: #selector(reloadAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -44,18 +58,41 @@ class DealTableViewCell: UITableViewCell {
     }
     
     func setupCell(with deal: Deal) {
-        self.footerView = FooterView(with: deal.title, andPrice: deal.minSalePrice)
+        self.footerView = DealFooterView(with: deal.shortTitle, andPrice: deal.minSalePrice)
         self.footerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if let model = deal.images?.first, let imagURLString = model.image, let imageURL = URL(string: imagURLString) {
+            self.dealImageView.load(url: imageURL, placeholder: nil)
+        }
+        
+        partnerNameLabel.text = deal.partner?.name ?? ""
+        
         self.setHierarchy()
         self.setConstraints()
     }
     
     private func setHierarchy() {
+        self.contentView.addSubview(self.dealImageView)
+        self.dealImageView.addSubview(self.view)
+        self.dealImageView.addSubview(self.partnerNameLabel)
         self.contentView.addSubview(self.footerView)
     }
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
+            self.dealImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.dealImageView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
+            self.dealImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
+            self.dealImageView.bottomAnchor.constraint(equalTo: self.footerView.topAnchor),
+            
+            self.view.topAnchor.constraint(equalTo: self.dealImageView.topAnchor),
+            self.view.rightAnchor.constraint(equalTo: self.dealImageView.rightAnchor),
+            self.view.leftAnchor.constraint(equalTo: self.dealImageView.leftAnchor),
+            self.view.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor),
+            
+            self.partnerNameLabel.leftAnchor.constraint(equalTo: self.dealImageView.leftAnchor, constant: 16),
+            self.partnerNameLabel.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor, constant: -16),
+            
             self.footerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
             self.footerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
             self.footerView.heightAnchor.constraint(equalToConstant: 70),
