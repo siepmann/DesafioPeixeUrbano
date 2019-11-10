@@ -13,4 +13,5 @@ protocol DealsView: NSObjectProtocol {
     func hideLoadingStatus()
     func showErrorWith(message: String)
     func show(deals: DealModel)
+    func showFavorites(deals: [Deal])
 }

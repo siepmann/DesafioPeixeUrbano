@@ -13,14 +13,13 @@ class NavigationViewController: UINavigationController {
         super.viewWillAppear(animated)
         
         let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-        statusBar.backgroundColor = .blue
+        statusBar.backgroundColor = UIColor(red: 1/255, green: 85/255, blue: 203/255, alpha: 1)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationBar.isTranslucent = true
-        self.navigationBar.tintColor = .black
+        self.navigationBar.isTranslucent = false
+        self.navigationBar.barTintColor = UIColor(red: 1/255, green: 85/255, blue: 203/255, alpha: 1)
         self.hidesBarsOnSwipe = true
     }
 }

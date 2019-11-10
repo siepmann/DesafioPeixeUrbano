@@ -12,6 +12,8 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFavoriteBadge), name: Notification.Name("updateBadgeIcon"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -19,29 +21,43 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         createNavigationBarButtons()
         
         let cityDealsViewController = ViewController(with: .city)
-        let cityDealsBarItem = UITabBarItem(title: "Na cidade", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
+        
+        let cityDealsBarItem = UITabBarItem(title: "Na cidade", image: #imageLiteral(resourceName: "City"), tag: 0)
         cityDealsViewController.tabBarItem = cityDealsBarItem
         
         let tripDealsViewController = ViewController(with: .trip)
-        let tripDealsBarItem = UITabBarItem(title: "Viagens", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
+        let tripDealsBarItem = UITabBarItem(title: "Viagens", image: #imageLiteral(resourceName: "Trip"), tag: 1)
         tripDealsViewController.tabBarItem = tripDealsBarItem
 
         let productDealsViewController = ViewController(with: .product)
-        let productDealsBarItem = UITabBarItem(title: "Produtos", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
+        let productDealsBarItem = UITabBarItem(title: "Produtos", image: #imageLiteral(resourceName: "Products"), tag:2)
         productDealsViewController.tabBarItem = productDealsBarItem
         
         self.tabBar.tintColor = UIColor.orange
+        
+        updateFavoriteBadge()
         
         self.viewControllers = [cityDealsViewController, tripDealsViewController, productDealsViewController]
     }
     
     private func createNavigationBarButtons() {
-        let logoutBarButtonItem = BadgeBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(favoritedItems))
-        
+        let logoutBarButtonItem = BadgeBarButtonItem(image: #imageLiteral(resourceName: "FavIconOff"), style: .done, target: self, action: #selector(favoritedItems))
+        logoutBarButtonItem.tintColor = .white
         self.navigationItem.rightBarButtonItem = logoutBarButtonItem
     }
     
-    @objc func favoritedItems(){
-        print("clicked")
+    @objc func updateFavoriteBadge() {
+        let count = FavoriteManager.shared.listFavorites().count
+        
+        if let button = self.navigationItem.rightBarButtonItem as? BadgeBarButtonItem {
+            button.badgeNumber = count
+        }
+        
+    }
+    
+    @objc func favoritedItems() {
+        let favorites = ViewController(with: .favorites)
+        favorites.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(favorites, animated: true)
     }
 }

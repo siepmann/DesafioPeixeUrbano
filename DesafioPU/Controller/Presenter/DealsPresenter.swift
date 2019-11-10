@@ -28,6 +28,8 @@ public class DealsPresenter {
             getProductDeals()
         case .trip:
             getTripDeals()
+        case .favorites:
+            getFavoritedDeals()
         case .none:
             dealsView.showErrorWith(message: "")
         }
@@ -67,5 +69,9 @@ public class DealsPresenter {
             }
             self?.dealsView.hideLoadingStatus()
         }
+    }
+    
+    private func getFavoritedDeals() {
+        self.dealsView.showFavorites(deals: FavoriteManager.shared.listFavorites())
     }
 }

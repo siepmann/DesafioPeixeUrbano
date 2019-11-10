@@ -9,7 +9,7 @@
 import UIKit
 
 enum ViewControllerType {
-    case city, trip, product, none
+    case city, trip, product, favorites, none
 }
 
 class ViewController: UIViewController {
@@ -227,6 +227,18 @@ extension ViewController: DealsView {
                     self.availableSections.append(.deals)
                 }
             }
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    func showFavorites(deals: [Deal]) {
+        DispatchQueue.main.async {
+            self.errorMessageLabel.isHidden = true
+            self.tableView.isHidden = false
+            
+            self.dealsResponse = deals
+            self.availableSections = [.deals]
             
             self.tableView.reloadData()
         }

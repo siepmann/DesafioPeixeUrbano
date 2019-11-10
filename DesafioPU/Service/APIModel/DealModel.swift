@@ -61,13 +61,13 @@ struct Mobile: Codable {
 
 // MARK: - Deal
 struct Deal: Codable {
-    let dealID: String?
+    let dealID: String
     let title, shortTitle: String
-    let images: [Image]?
+    let images: [Image]
     let fullPrice, salePrice: Double
     let minSalePrice: Double
-    let dealImage: String?
-    let dealOriginalImage: String?
+    let dealImage: String
+    let dealOriginalImage: String
     let partner: Partner?
     
     enum CodingKeys: String, CodingKey {
@@ -80,6 +80,10 @@ struct Deal: Codable {
         case minSalePrice = "min_sale_price"
         case dealImage, dealOriginalImage
         case partner
+    }
+    
+    func isFavorited() -> Bool {
+        return FavoriteManager.shared.isFavorited(deal: self)
     }
 }
 

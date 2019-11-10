@@ -17,7 +17,7 @@ public class BadgeBarButtonItem: UIBarButtonItem {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .red
+        label.backgroundColor = .orange
         label.alpha = 0.9
         label.layer.cornerRadius = 9
         label.clipsToBounds = true
@@ -26,6 +26,7 @@ public class BadgeBarButtonItem: UIBarButtonItem {
         label.textAlignment = .center
         label.textColor = .white
         label.layer.zPosition = 1
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         
         return label
     }()

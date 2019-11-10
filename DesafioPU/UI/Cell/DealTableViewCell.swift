@@ -10,6 +10,7 @@ import UIKit
 
 class DealTableViewCell: UITableViewCell {
     private var footerView: DealFooterView!
+    private var currentDeal: Deal!
     
     private let view: UIView = {
         let view = UIView(frame: .zero)
@@ -23,6 +24,7 @@ class DealTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -35,11 +37,17 @@ class DealTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let favIconViewHolder: UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        view.layer.cornerRadius = 20
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: ""), for: .normal)
-        button.setTitle("", for: .normal)
-        //        button.addTarget(self, action: #selector(reloadAction), for: .touchUpInside)
+        button.setImage(#imageLiteral(resourceName: "FavIconOff"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -58,11 +66,21 @@ class DealTableViewCell: UITableViewCell {
     }
     
     func setupCell(with deal: Deal) {
+        self.selectionStyle = .none
+        self.currentDeal = deal
+        favoriteButton.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
+        
         self.footerView = DealFooterView(with: deal.shortTitle, andPrice: deal.minSalePrice)
         self.footerView.translatesAutoresizingMaskIntoConstraints = false
         
-        if let model = deal.images?.first, let imagURLString = model.image, let imageURL = URL(string: imagURLString) {
+        if let model = deal.images.first, let imagURLString = model.image, let imageURL = URL(string: imagURLString) {
             self.dealImageView.load(url: imageURL, placeholder: nil)
+        }
+        
+        if deal.isFavorited() {
+            favoriteButton.setImage(#imageLiteral(resourceName: "FavIconOn"), for: .normal)
+        } else {
+            favoriteButton.setImage(#imageLiteral(resourceName: "FavIconOff"), for: .normal)
         }
         
         partnerNameLabel.text = deal.partner?.name ?? ""
@@ -71,10 +89,22 @@ class DealTableViewCell: UITableViewCell {
         self.setConstraints()
     }
     
+    @objc private func favoriteTapped() {
+        if currentDeal.isFavorited() {
+            FavoriteManager.shared.removeFromFavorite(deal: currentDeal)
+            favoriteButton.setImage(#imageLiteral(resourceName: "FavIconOff"), for: .normal)
+        } else {
+            FavoriteManager.shared.addToFavorite(deal: currentDeal)
+            favoriteButton.setImage(#imageLiteral(resourceName: "FavIconOn"), for: .normal)
+        }
+    }
+    
     private func setHierarchy() {
         self.contentView.addSubview(self.dealImageView)
         self.dealImageView.addSubview(self.view)
         self.dealImageView.addSubview(self.partnerNameLabel)
+        self.dealImageView.addSubview(self.favIconViewHolder)
+        self.favIconViewHolder.addSubview(self.favoriteButton)
         self.contentView.addSubview(self.footerView)
     }
     
@@ -92,6 +122,15 @@ class DealTableViewCell: UITableViewCell {
             
             self.partnerNameLabel.leftAnchor.constraint(equalTo: self.dealImageView.leftAnchor, constant: 16),
             self.partnerNameLabel.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor, constant: -16),
+            self.partnerNameLabel.rightAnchor.constraint(equalTo: self.favIconViewHolder.leftAnchor, constant: -8),
+            
+            self.favIconViewHolder.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor, constant: -16),
+            self.favIconViewHolder.rightAnchor.constraint(equalTo: self.dealImageView.rightAnchor, constant: -16),
+            self.favIconViewHolder.widthAnchor.constraint(equalToConstant: 40),
+            self.favIconViewHolder.heightAnchor.constraint(equalToConstant: 40),
+            
+            self.favoriteButton.centerXAnchor.constraint(equalTo: self.favIconViewHolder.centerXAnchor),
+            self.favoriteButton.centerYAnchor.constraint(equalTo: self.favIconViewHolder.centerYAnchor),
             
             self.footerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
             self.footerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),

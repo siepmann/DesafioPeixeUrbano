@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6FB4CE2A237584EC00F17681 /* DealImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB4CE29237584EC00F17681 /* DealImageView.swift */; };
 		6FB4CE2D2375A2A400F17681 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB4CE2C2375A2A400F17681 /* UIImageView.swift */; };
+		6FB63DE423785E3F00290E0D /* FavoriteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB63DE323785E3F00290E0D /* FavoriteManager.swift */; };
 		942CB13E2372F348004F121E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942CB13D2372F348004F121E /* AppDelegate.swift */; };
 		942CB1402372F348004F121E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942CB13F2372F348004F121E /* ViewController.swift */; };
 		942CB1432372F348004F121E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 942CB1412372F348004F121E /* Main.storyboard */; };
@@ -49,8 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6FB4CE29237584EC00F17681 /* DealImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealImageView.swift; sourceTree = "<group>"; };
 		6FB4CE2C2375A2A400F17681 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		6FB63DE323785E3F00290E0D /* FavoriteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteManager.swift; sourceTree = "<group>"; };
 		942CB13A2372F348004F121E /* DesafioPU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesafioPU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		942CB13D2372F348004F121E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		942CB13F2372F348004F121E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +161,7 @@
 				942CB15F2372FE83004F121E /* Base */,
 				942CB15E2372FE7A004F121E /* Routers */,
 				942CB1602372FE8C004F121E /* Services */,
+				6FB63DE323785E3F00290E0D /* FavoriteManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -272,7 +273,6 @@
 			isa = PBXGroup;
 			children = (
 				9459187923747BDC00018AF9 /* DealFooterView.swift */,
-				6FB4CE29237584EC00F17681 /* DealImageView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -380,7 +380,6 @@
 			files = (
 				942CB18923734BA4004F121E /* DealsPresenter.swift in Sources */,
 				942CB18B23734C25004F121E /* ServiceProtocol.swift in Sources */,
-				6FB4CE2A237584EC00F17681 /* DealImageView.swift in Sources */,
 				945918752374542400018AF9 /* BannerCollectionViewCell.swift in Sources */,
 				9459187A23747BDC00018AF9 /* DealFooterView.swift in Sources */,
 				942CB1402372F348004F121E /* ViewController.swift in Sources */,
@@ -399,6 +398,7 @@
 				942CB1652372FF30004F121E /* APISessionConfiguration.swift in Sources */,
 				942CB16B23730175004F121E /* BaseService.swift in Sources */,
 				945918772374562300018AF9 /* DealTableViewCell.swift in Sources */,
+				6FB63DE423785E3F00290E0D /* FavoriteManager.swift in Sources */,
 				942CB16D237301FE004F121E /* Result.swift in Sources */,
 				942CB17D23732CC5004F121E /* NavigationViewController.swift in Sources */,
 				942CB18D23734D90004F121E /* DealsView.swift in Sources */,
