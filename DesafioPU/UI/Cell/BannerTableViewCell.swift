@@ -21,12 +21,16 @@ class BannerTableViewCell: UITableViewCell {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 150)
         
         collectionView = UICollectionView(frame: self.contentView.bounds, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
         collectionView.allowsSelection = false
         collectionView.dataSource = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
         
-//        collectionView.registerCollectionViewCell(BannerCollectionViewCell.self)
+        collectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.reusableIdentifier)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,6 +39,14 @@ class BannerTableViewCell: UITableViewCell {
     
     func setupCell(with banners: [Banner]) {
         self.bannerDataSource = banners
+        self.contentView.addSubview(collectionView)
+        
+        NSLayoutConstraint.activate([
+            self.collectionView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.collectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            self.collectionView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
+            self.collectionView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor)
+            ])
     }
     
     override func prepareForReuse() {

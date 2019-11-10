@@ -46,6 +46,7 @@ class FavoriteManager {
         if let encoded = try? JSONEncoder().encode(deals) {
             defaults.set(encoded, forKey: key)
             NotificationCenter.default.post(name: Notification.Name("updateBadgeIcon"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name("refreshFavorites"), object: nil)
         }
     }
 }

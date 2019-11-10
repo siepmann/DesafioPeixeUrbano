@@ -74,6 +74,11 @@ class ViewController: UIViewController {
         
         self.navigationController?.hidesBarsOnSwipe = self.type != .favorites
         
+        if type == .favorites {
+            self.navigationController?.navigationBar.topItem?.title = " "
+            NotificationCenter.default.addObserver(self, selector: #selector(reloadAction), name: Notification.Name("refreshFavorites"), object: nil)
+        }
+        
         self.createViewHierarchy()
     }
     
@@ -95,6 +100,13 @@ class ViewController: UIViewController {
     
     @objc private func reloadAction() {
         self.dealsPresenter.onStart()
+    }
+    
+    deinit {
+        if type == .favorites {
+            NotificationCenter.default.removeObserver(self)
+        }
+
     }
 }
 
@@ -131,7 +143,7 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch availableSections[indexPath.section] {
         case .banner:
-            return 100
+            return 150
         case .deals:
             return 200
         }

@@ -21,7 +21,6 @@ class NavigationViewController: UINavigationController {
         self.navigationBar.isTranslucent = false
         self.navigationBar.barTintColor = UIColor(red: 1/255, green: 85/255, blue: 203/255, alpha: 1)
         
-        self.navigationBar.topItem?.title = " "
         self.navigationBar.tintColor = .white
     }
 }
