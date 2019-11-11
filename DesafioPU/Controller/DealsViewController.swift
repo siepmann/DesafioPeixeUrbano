@@ -8,17 +8,17 @@
 
 import UIKit
 
-enum ViewControllerType {
-    case city, trip, product, favorites, none
+enum DealsViewControllerType {
+    case city, trip, product, favorites
 }
 
-class ViewController: UIViewController {
+class DealsViewController: UIViewController {
     
     enum Sections {
         case banner, deals
     }
     
-    private var type: ViewControllerType
+    private var type: DealsViewControllerType
     private var dealsPresenter: DealsPresenter!
     private var dealsResponse: [Deal] = []
     private var bannersResponse: [Banner] = []
@@ -26,8 +26,9 @@ class ViewController: UIViewController {
     
     private let errorMessageLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 17)
         label.numberOfLines = 0
+        label.textColor = .gray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -35,16 +36,17 @@ class ViewController: UIViewController {
     
     private let reloadButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: ""), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Retry"), for: .normal)
         button.setTitle("", for: .normal)
         button.addTarget(self, action: #selector(reloadAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
         return button
     }()
     
     private let loadingIndicator: UIActivityIndicatorView = {
         let loading = UIActivityIndicatorView(style: .whiteLarge)
-        loading.tintColor = .black
+        loading.color = .black
         loading.hidesWhenStopped = true
         loading.translatesAutoresizingMaskIntoConstraints = false
         return loading
@@ -59,14 +61,13 @@ class ViewController: UIViewController {
         return table
     }()
     
-    init(with type: ViewControllerType) {
+    init(with type: DealsViewControllerType) {
         self.type = type
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.type = .none
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,7 +112,7 @@ class ViewController: UIViewController {
 }
 
 //MARK: - UITableView datasource
-extension ViewController: UITableViewDataSource {
+extension DealsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return availableSections.count
     }
@@ -139,7 +140,7 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension DealsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch availableSections[indexPath.section] {
         case .banner:
@@ -152,7 +153,7 @@ extension ViewController: UITableViewDelegate {
 
 
 //MARK: - Constraints Creation
-extension ViewController {
+extension DealsViewController {
     private func createViewHierarchy() {
         self.view.addSubview(loadingIndicator)
         self.view.addSubview(errorMessageLabel)
@@ -192,24 +193,26 @@ extension ViewController {
     
     private func setupReloadButtonConstraints() {
         NSLayoutConstraint.activate([
-            reloadButton.widthAnchor.constraint(equalToConstant: 20),
-            reloadButton.heightAnchor.constraint(equalToConstant: 20),
+            reloadButton.widthAnchor.constraint(equalToConstant: 50),
+            reloadButton.heightAnchor.constraint(equalToConstant: 50),
             reloadButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            reloadButton.bottomAnchor.constraint(equalTo: self.errorMessageLabel.topAnchor, constant: 8)
+            reloadButton.bottomAnchor.constraint(equalTo: self.errorMessageLabel.topAnchor, constant: -30)
             ])
     }
 }
 
 // MARK: - View Delegates
-extension ViewController: DealsView {
+extension DealsViewController: DealsView {
     func showLoadingStatus() {
         DispatchQueue.main.async {
+            self.tableView.isHidden = true
             self.loadingIndicator.startAnimating()
         }
     }
     
     func hideLoadingStatus() {
         DispatchQueue.main.async {
+            self.tableView.isHidden = false
             self.loadingIndicator.stopAnimating()
         }
     }
@@ -218,8 +221,9 @@ extension ViewController: DealsView {
         DispatchQueue.main.async {
             self.errorMessageLabel.isHidden = false
             self.tableView.isHidden = true
-            
+            self.reloadButton.isHidden = false
             self.errorMessageLabel.text = message
+            self.reloadButton.isHidden = self.type == .favorites
         }
     }
     
@@ -227,6 +231,7 @@ extension ViewController: DealsView {
         DispatchQueue.main.async {
             self.errorMessageLabel.isHidden = true
             self.tableView.isHidden = false
+            self.reloadButton.isHidden = true
             
             if let banners = deals.response?.banners {
                 self.bannersResponse = banners

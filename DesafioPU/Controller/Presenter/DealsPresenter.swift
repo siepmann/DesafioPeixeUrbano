@@ -11,9 +11,9 @@ import Foundation
 public class DealsPresenter {
     private let service: ServiceProtocol
     unowned private var dealsView: DealsView
-    private let controllerType: ViewControllerType
+    private let controllerType: DealsViewControllerType
     
-    init(service: ServiceProtocol, viewControllerType: ViewControllerType, dealsView: DealsView) {
+    init(service: ServiceProtocol, viewControllerType: DealsViewControllerType, dealsView: DealsView) {
         self.service = service
         self.dealsView = dealsView
         self.controllerType = viewControllerType
@@ -30,8 +30,6 @@ public class DealsPresenter {
             getTripDeals()
         case .favorites:
             getFavoritedDeals()
-        case .none:
-            dealsView.showErrorWith(message: "")
         }
     }
     
@@ -41,7 +39,7 @@ public class DealsPresenter {
             if result.isSuccess, let value = result.value {
                 self?.dealsView.show(deals: value)
             } else {
-                self?.dealsView.showErrorWith(message: "")
+                self?.dealsView.showErrorWith(message: "Erro ao consultar dados, tente novamente.")
             }
             self?.dealsView.hideLoadingStatus()
         }
@@ -53,7 +51,7 @@ public class DealsPresenter {
             if result.isSuccess, let value = result.value {
                 self?.dealsView.show(deals: value)
             } else {
-                self?.dealsView.showErrorWith(message: "")
+                self?.dealsView.showErrorWith(message: "Erro ao consultar dados, tente novamente.")
             }
             self?.dealsView.hideLoadingStatus()
         }
@@ -65,13 +63,19 @@ public class DealsPresenter {
             if result.isSuccess, let value = result.value {
                 self?.dealsView.show(deals: value)
             } else {
-                self?.dealsView.showErrorWith(message: "")
+                self?.dealsView.showErrorWith(message: "Erro ao consultar dados, tente novamente.")
             }
             self?.dealsView.hideLoadingStatus()
         }
     }
     
     private func getFavoritedDeals() {
-        self.dealsView.showFavorites(deals: FavoriteManager.shared.listFavorites())
+        let favorites = FavoriteManager.shared.listFavorites()
+        if favorites.count > 0 {
+            self.dealsView.showFavorites(deals: FavoriteManager.shared.listFavorites())
+        } else {
+            self.dealsView.showErrorWith(message: "Nenhum item encontrado como favorito.")
+        }
+        
     }
 }

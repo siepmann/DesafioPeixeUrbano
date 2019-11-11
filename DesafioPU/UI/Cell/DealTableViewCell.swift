@@ -37,18 +37,21 @@ class DealTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let favIconViewHolder: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
-        view.layer.cornerRadius = 20
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+//    private let favIconViewHolder: UIView = {
+//        let view = UIView(frame: .zero)
+//        view.backgroundColor = UIColor.gray.withAlphaComponent(0.6)
+//        view.layer.cornerRadius = 20
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
     
     private let favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "FavIconOff"), for: .normal)
+        button.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        button.layer.cornerRadius = 25
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
     
@@ -103,8 +106,8 @@ class DealTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.dealImageView)
         self.dealImageView.addSubview(self.view)
         self.dealImageView.addSubview(self.partnerNameLabel)
-        self.dealImageView.addSubview(self.favIconViewHolder)
-        self.favIconViewHolder.addSubview(self.favoriteButton)
+//        self.dealImageView.addSubview(self.favIconViewHolder)
+        self.dealImageView.addSubview(self.favoriteButton)
         self.contentView.addSubview(self.footerView)
     }
     
@@ -122,15 +125,17 @@ class DealTableViewCell: UITableViewCell {
             
             self.partnerNameLabel.leftAnchor.constraint(equalTo: self.dealImageView.leftAnchor, constant: 16),
             self.partnerNameLabel.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor, constant: -16),
-            self.partnerNameLabel.rightAnchor.constraint(equalTo: self.favIconViewHolder.leftAnchor, constant: -8),
+            self.partnerNameLabel.rightAnchor.constraint(equalTo: self.favoriteButton.leftAnchor, constant: -8),
             
-            self.favIconViewHolder.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor, constant: -16),
-            self.favIconViewHolder.rightAnchor.constraint(equalTo: self.dealImageView.rightAnchor, constant: -16),
-            self.favIconViewHolder.widthAnchor.constraint(equalToConstant: 40),
-            self.favIconViewHolder.heightAnchor.constraint(equalToConstant: 40),
+//            self.favIconViewHolder.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor, constant: -16),
+//            self.favIconViewHolder.rightAnchor.constraint(equalTo: self.dealImageView.rightAnchor, constant: -16),
+//            self.favIconViewHolder.widthAnchor.constraint(equalToConstant: 40),
+//            self.favIconViewHolder.heightAnchor.constraint(equalToConstant: 40),
             
-            self.favoriteButton.centerXAnchor.constraint(equalTo: self.favIconViewHolder.centerXAnchor),
-            self.favoriteButton.centerYAnchor.constraint(equalTo: self.favIconViewHolder.centerYAnchor),
+            self.favoriteButton.bottomAnchor.constraint(equalTo: self.dealImageView.bottomAnchor, constant: -16),
+            self.favoriteButton.rightAnchor.constraint(equalTo: self.dealImageView.rightAnchor, constant: -16),
+            self.favoriteButton.widthAnchor.constraint(equalToConstant: 50),
+            self.favoriteButton.heightAnchor.constraint(equalToConstant: 50),
             
             self.footerView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
             self.footerView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),

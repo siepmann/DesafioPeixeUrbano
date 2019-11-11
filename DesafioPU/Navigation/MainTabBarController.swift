@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UITabBarController, UITabBarControllerDelegate {
+class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -20,17 +20,17 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         super.viewWillAppear(animated)
         createNavigationBarButtons()
         
-        let cityDealsViewController = ViewController(with: .city)
+        let cityDealsViewController = DealsViewController(with: .city)
         
         let cityDealsBarItem = UITabBarItem(title: "Na cidade", image: #imageLiteral(resourceName: "City"), tag: 0)
         cityDealsViewController.tabBarItem = cityDealsBarItem
         
-        let tripDealsViewController = ViewController(with: .trip)
+        let tripDealsViewController = DealsViewController(with: .trip)
         let tripDealsBarItem = UITabBarItem(title: "Viagens", image: #imageLiteral(resourceName: "Trip"), tag: 1)
         tripDealsViewController.tabBarItem = tripDealsBarItem
 
-        let productDealsViewController = ViewController(with: .product)
-        let productDealsBarItem = UITabBarItem(title: "Produtos", image: #imageLiteral(resourceName: "Products"), tag:2)
+        let productDealsViewController = DealsViewController(with: .product)
+        let productDealsBarItem = UITabBarItem(title: "Produtos", image: #imageLiteral(resourceName: "Products"), tag: 2)
         productDealsViewController.tabBarItem = productDealsBarItem
         
         self.tabBar.tintColor = UIColor.orange
@@ -56,7 +56,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc func favoritedItems() {
-        let favorites = ViewController(with: .favorites)
+        let favorites = DealsViewController(with: .favorites)
         favorites.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(favorites, animated: true)
     }
